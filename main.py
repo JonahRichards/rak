@@ -171,8 +171,32 @@ def calc_ang_vel_mag_zer():
         print()
 
 
+def test():
+    imu = read("imu")
+
+    t = imu["t_imu_ay"]
+    y = imu["imu_ay"]
+    z = imu["imu_az"]
+
+    plt.plot(t, y)
+    plt.plot(t, z)
+    plt.show()
+
+
+def test_2():
+    analogue = read("analogue")
+
+    t = analogue["t"]
+    y = smooth(analogue["photometer"])
+    x = smooth(analogue["ax"])
+
+    plt.plot(t, y)
+    #plt.plot(t, x)
+    plt.show()
+
+
 def main():
-    calc_ang_vel_mag_zer()
+    test_2()
 
 
 
