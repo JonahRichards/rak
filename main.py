@@ -711,7 +711,7 @@ def unmod_ang(th: list):
 
 
 def roll_angle():
-    results = gyr_ang_calc(3200, 5100, False)
+    results = gyr_ang_calc(3200, 5100, True)
     t = results["t"]
     ang = results["ang"]
 
@@ -767,7 +767,7 @@ def equilibrium_v2(t, v, s=50):
 
 
 def yaw_angle():
-    plot = False
+    plot = True
 
     gps = read("gps")
 
@@ -790,7 +790,7 @@ def yaw_angle():
 
     if plot:
         plt.plot(t[:-1], dlt, 'ro', label="Change in Latitude")
-        plt.plot(t[:-1], dlt, 'bo', label="Change in Longitude")
+        plt.plot(t[:-1], dlg, 'bo', label="Change in Longitude")
         plt.title("GPS Data")
         plt.legend()
         plt.show()
@@ -837,9 +837,9 @@ def yaw_angle():
     ang_red = [ang * 2 * np.pi / 360 for ang in ang_red]
     ang_nnan = [ang * 2 * np.pi / 360 for ang in ang_nnan]
 
-    if not plot:
-        plt.plot(t_nnan, ang_nnan, 'ro', label="Heading (°)")
-        plt.plot(t_nnan, ang_red, 'b', label="Noise Reduced Heading (°)")
+    if plot:
+        plt.plot(t_nnan, ang_nnan, 'ro', label="Heading (rad)")
+        plt.plot(t_nnan, ang_red, 'b', label="Noise Reduced Heading (rad)")
         #plt.ylim(-180, 180)
         plt.title("GPS Data")
         plt.legend()
@@ -854,7 +854,7 @@ def yaw_angle():
 
 
 def pitch_angle():
-    plot = False
+    plot = True
 
     gps = read("gps")
 
@@ -1044,10 +1044,10 @@ def transform_mag():
     pa = interpolate(t, pt, pa)
     ya = interpolate(t, yt, ya)
 
-    if plot:
-        plt.plot(t, ra, 'r', label="Roll Angle")
-        plt.plot(t, pa, 'g', label="Pitch Angle")
-        plt.plot(t, ya, 'b', label="Yaw Angle")
+    if not plot:
+        plt.plot(t, ra, 'ro', label="Roll Angle")
+        plt.plot(t, pa, 'go', label="Pitch Angle")
+        plt.plot(t, ya, 'bo', label="Yaw Angle")
         plt.title("Rotation Data")
         plt.legend()
         plt.show()
@@ -1128,10 +1128,8 @@ def transform_mag():
     results_df.to_csv("Output Data\Mag.csv", index=False)
 
 
-
 def main():
     transform_mag()
-
 
 
 
